@@ -1,9 +1,23 @@
-import React from "react";
+import React, { useState } from "react";
+import Cronometro from "./Cronometro";
 
-const pcList = ({name, activeButton, stopButton}: any) => {
+const PcList = ({name}: any) => {
+
+  const [active, setActive] = useState(false)
+
+  const activeButton = ()=>{
+    setActive(true)
+    
+  }
+
+  const stopButton = ()=>{
+    setActive(false)
+    
+  }
+  
   return (
     <li className="w-full text-[30px] flex cursor-default border-b-2 border-neutral-800 border-opacity-100 py-6  dark:border-opacity-50">
-      {name}
+      PC {name}
       <div>
         <button
           type="button"
@@ -20,8 +34,11 @@ const pcList = ({name, activeButton, stopButton}: any) => {
           Cerrar Contador
         </button>
       </div>
+      <div>{ active ?
+        <Cronometro/> : <div>cerrado</div>
+        }</div>
     </li>
   );
 };
 
-export default pcList;
+export default PcList;

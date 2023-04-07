@@ -7,26 +7,6 @@ const inter = Inter({ subsets: ["latin"] });
 
 export default function Home() {
   const [pc, setPC] = useState([1, 2, 3, 4, 5, 6]);
-  const [time, setTime] = useState(0);
-  const [active, setActive] = useState(false);
-
-  useEffect(() => {
-    if (active) {
-      const intervalId = setInterval(() => {
-        setTime((prevTime) => prevTime + 1);
-      }, 1000);
-
-      return () => clearInterval(intervalId);
-    }
-  }, [active]);
-
-  const activeButton = ()=> {
-    setActive(true)
-  }
-
-  const stopButton = ()=> {
-    setActive(false)
-  }
 
   return (
     <div>
@@ -34,10 +14,9 @@ export default function Home() {
         <div className="col-span-1 p-4 w-full h-[100vh] relative z-1 bg-[#9798a8] rounded shadow-lg overflow-hidden">
           <ul className="w-full">
             {pc.map((item, index) => {
-              console.log(item);
               return (
                 <article key={index}>
-                  <PcList name={`PC ${item}`} activeButton={activeButton} stopButton={stopButton} />
+                  <PcList name={item} />
                 </article>
               );
             })}
@@ -45,7 +24,6 @@ export default function Home() {
         </div>
         <div className=" col-span-1 bg-[#adaeb8] p-4 w-full relative z-0 px-8 h-[100vh] ">
           <div className="text-lg font-medium uppercase p-8 text-center border-b border-blue-800 tracking-wide">
-            {time}
           </div>
           <div className="text-center text-sm sm:text-md max-w-sm mx-auto mt-8 text-blue-200 px-8 lg:px-0">
             Stripe offers everything needed to run an online business at scale.
