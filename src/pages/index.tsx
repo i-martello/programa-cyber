@@ -5,7 +5,27 @@ import { useEffect, useState } from "react";
 
 const inter = Inter({ subsets: ["latin"] });
 
+interface historialType {
+  segundos: number;
+  minutos: number;
+  horas: number;
+  precio: number;
+  createdAt: Date;
+}
+
 export default function Home() {
+  const [historial, setHistorial] = useState<historialType[]>([]);
+
+  useEffect(() => {
+    (async () => {
+      await fetch("/api/gethistorial")
+        .then((response) => response.json())
+        .then((data) => setHistorial(data));
+    })();
+  }, [historial]);
+
+  console.log(historial);
+
   const [pc, setPC] = useState([1, 2, 3, 4, 5, 6]);
 
   return (
@@ -23,26 +43,48 @@ export default function Home() {
           </ul>
         </div>
         <div className=" col-span-1 bg-[#adaeb8] p-4 w-full relative z-0 px-8 h-[100vh] ">
-          <div className="text-lg font-medium uppercase p-8 text-center border-b border-blue-800 tracking-wide">
-          </div>
-          <div className="text-center text-sm sm:text-md max-w-sm mx-auto mt-8 text-blue-200 px-8 lg:px-0">
-            Stripe offers everything needed to run an online business at scale.
-            Get in touch for details.
-          </div>
-          <div className="mt-8 border border-blue-800 mx-8 lg:mx-16 flex flex-wrap">
-            <div className="flex items-center justify-center w-1/2 text-center p-4 border-r border-b border-blue-800">
-              Account management
-            </div>
-            <div className="flex items-center justify-center w-1/2 text-center p-4 border-b border-blue-800">
-              Volume discounts
-            </div>
-            <div className="flex items-center justify-center w-1/2 text-center p-4 border-r border-blue-800">
-              Migration assistance
-            </div>
-            <div className="flex items-center justify-center w-1/2 text-center p-4">
-              Dedicated support
-            </div>
-          </div>
+          <table className="border-collapse border border-gray-400">
+            <thead>
+              <tr>
+                <th className="p-4">Tiempo</th>
+                <th className="p-4">Precio</th>
+                <th className="p-4">Hora</th>
+              </tr>
+            </thead>
+            <tbody>
+              {historial.map((item, index) => {
+                return (
+                  <tr key={index}>
+                    <td className="flex p-10">
+                      <span>
+                        {item.horas.toString().length === 2 ? (
+                          <div>{item.horas}:</div>
+                        ) : (
+                          <div>0{item.horas}:</div>
+                        )}
+                      </span>
+                      <span>
+                        {item.minutos.toString().length === 2 ? (
+                          <div>{item.minutos}:</div>
+                        ) : (
+                          <div>0{item.minutos}:</div>
+                        )}
+                      </span>
+                      <span>
+                        {item.segundos.toString().length === 2 ? (
+                          <div>{item.segundos}</div>
+                        ) : (
+                          <div>0{item.segundos}</div>
+                        )}
+                      </span>
+                    </td>
+                    <td className="p-10">${item.precio}</td>
+                    <td className="p-10">{new Date(item.createdAt).toLocaleString()}</td>
+                  </tr>
+                );
+              })}
+            </tbody>
+          </table>
         </div>
       </div>
     </div>
