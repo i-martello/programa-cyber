@@ -29,7 +29,7 @@ const Cronometro = () => {
   useEffect(() => {
     const idIntervalPrecio = setInterval(()=>{
       setPrecio(Math.round(precio + 40))
-    },12000)
+    },120000)
   
     return () => {
       clearInterval(idIntervalPrecio);
