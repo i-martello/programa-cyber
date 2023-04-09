@@ -42,7 +42,7 @@ export default function Home() {
             })}
           </ul>
         </div>
-        <div className=" col-span-1 bg-[#adaeb8] p-4 w-full relative z-0 px-8 h-[100vh] ">
+        <div className=" col-span-1 bg-[#adaeb8] p-4 w-full relative z-0 px-8 h-[100vh] overflow-y-auto">
           <table className="border-collapse border border-gray-400">
             <thead>
               <tr>
