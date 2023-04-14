@@ -1,11 +1,12 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 
-const Cronometro = ({isActive}: any) => {
+const Cronometro = ({isActive, precioInicial, precioPorHora}: any) => {
   const [segundos, setSegundos] = useState(0);
   const [minutos, setMinutos] = useState(0);
   const [horas, setHoras] = useState(0);
-  const [precio, setPrecio] = useState(20);
+  const [precio, setPrecio] = useState(precioInicial);
+  
 
   useEffect(() => {
     const idInterval = setInterval(() => {
@@ -25,7 +26,7 @@ const Cronometro = ({isActive}: any) => {
     return () => {
       clearInterval(idInterval);
     };
-  }, [segundos, minutos, horas, precio]);
+  }, [segundos, minutos, horas, precio]);  
 
   const handleButton = async () => {
     const data = { segundos, minutos, horas, precio };
@@ -38,8 +39,8 @@ const Cronometro = ({isActive}: any) => {
 
   useEffect(() => {
     const idIntervalPrecio = setInterval(() => {
-      setPrecio(Math.round(precio + 40));
-    }, 120000);
+      setPrecio(Math.round(precio + (precioPorHora / 60)));
+    }, 60000);
 
     return () => {
       clearInterval(idIntervalPrecio);
